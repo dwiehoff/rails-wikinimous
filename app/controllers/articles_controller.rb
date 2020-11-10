@@ -12,6 +12,12 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    article = Article.create(article_params)
+    if article.save
+      redirect_to articles_path
+    else
+      render :new
+    end
   end
 
   def edit
@@ -21,5 +27,11 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:author, :title, :content, :rating)
   end
 end
